@@ -9,7 +9,7 @@ There is only one routine, `slugify:slugify`.
 Using it looks somewhat like this:
 ```clojure
 (slugify:slugify "please slugify this text")
-=> "please-slugify-this-text
+=> "please-slugify-this-text"
 (slugify:slugify "ple'ase slügify this text" 
 (make-hash ["separator" "_"]
            ["replace" slugify:replace:german]
