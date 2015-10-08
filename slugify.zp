@@ -159,10 +159,10 @@
          (unsafe-symbols (get-from extra "unsafe-symbols" []))
          (replace (get-from extra "replace" slugify:replace:all)))
     (begin
-      (define replaced (hash-keys-reduce (lambda (acc x) (string-substitute acc x (replace x))) text replace))
-      (define safe (reduce (lambda (acc x) (string-substitute acc x "")) replaced unsafe-symbols))
-      (define split (string-split safe #\space))
-      (string-tail
+      (define replaced (hash:keys-reduce (lambda (acc x) (string:substitute acc x (replace x))) text replace))
+      (define safe (reduce (lambda (acc x) (string:substitute acc x "")) replaced unsafe-symbols))
+      (define split (string:split safe #\space))
+      (string:tail
         (reduce (lambda (acc x) 
           (let ((new (++ acc delim x)))
             (if (and (<= (length new) max-length) (not (in unsafe x)))
