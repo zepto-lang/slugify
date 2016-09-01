@@ -1,12 +1,12 @@
 (module "slugify"
-  
+
   (export
     (list :slugify slugify)
     (list :replace:all replace:all)
     (list :replace:german replace:german)
     (list :replace:japanese-hiragana replace:japanese-hiragana)
     (list :replace:japanese-katakana replace:japanese-katakana))
-  
+
   (LENGTH 100)
   (SEPARATOR "-")
 
@@ -157,10 +157,33 @@
                           replace:japanese-hiragana))
 
   (slugify (lambda (text . extra)
-    "slugifies a given text, like so:
+    "slugifies a given <par>text</par>, like so:
       input:  \"i am a bad text\"
       output: \"i-am-a-bad-text\"
-    takes many optional arguments, please consult the documentation"
+
+     It takes five configuration options, namely:
+      <dl>
+       <dt>separator (string)</dt>
+       <dd>this customizes the string that separates words in the slug. (default: "-")</dd>
+       <dt>replace (hash-map)</dt>
+       <dd>this customizes the replacement behaviour for different alphabets.
+           Currently supported (i.e. in the package) are German and Japanese
+           (Hiragana & Katakana), both are select via `slugify:replace:all`,
+           which is also the default.</dd>
+       <dt>max-length (int)</dt>
+       <dd>this customizes the maximal length of the slug. All words following it
+           will be truncated. (default: 100)</dd>
+       <dt>unsafe (list of strings)</dt>
+       <dd>this customizes words that should be deleted. (default: [])</dd>
+       <dt>unsafe-symbols (list of strings)</dt>
+       <dd>this customizes fragments that should be deleted. (default: [])</dd>
+      </dl>
+
+     params:
+      - text: the text to slugify
+      - extra: the configuration options
+     complexity: O(n)
+     returns: a new string"
     (let* ((extra (get-from extra 0 (make-hash)))
            (max-length (get-from extra "max-length" LENGTH))
            (delim (get-from extra "separator" SEPARATOR))
